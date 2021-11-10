@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from "react-dom";
+// import ReactDOM from 'react-dom';
 // import './index.css';
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
@@ -17,3 +18,20 @@ import ReactDOM from 'react-dom';
 // reportWebVitals();
 
 const node = document.getElementById('root');
+
+const root = React.createElement(
+  "div",
+  {},
+  React.createElement(
+    "h1",
+    {},
+    "Hello, world!",
+    React.createElement(
+      "a",
+      { href: "mailto:mark@ifelse.io" },
+      React.createElement("h1", {}, "React In Action"),
+      React.createElement("em", {}, "...and now it really is!")
+    )
+  )
+);
+render(root, node);
