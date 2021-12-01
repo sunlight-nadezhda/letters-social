@@ -71,16 +71,51 @@ class Comment extends Component {
   }
 }
 
+class CreateComment extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      content: '',
+      user: ''
+    };
+  }
+  render() {
+    return React.createElement(
+      'form',
+      {
+        className: 'createComment'
+      },
+      React.createElement('input', {
+        type: 'text',
+        placeholder: 'Your name',
+        value: this.state.user
+      }),
+      React.createElement('input', {
+        type: 'text',
+        placeholder: 'Thoughts?'
+      }),
+      React.createElement('input', {
+        type: 'submit',
+        value: 'Post'
+      }),
+    );
+  }
+}
+
+Post.propTypes = {
+  user: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired
+};
+
 Comment.propTypes = {
   id: PropTypes.number.isRequired,
   content: PropTypes.string.isRequired,
   user: PropTypes.string.isRequired
 };
 
-Post.propTypes = {
-  user: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired
+CreateComment.propTypes = {
+  content: PropTypes.string
 };
 
 const App = React.createElement(
@@ -94,7 +129,8 @@ const App = React.createElement(
     id: 2,
     user: 'Bob',
     content: ' commented: wow! how cool!'
-  })
+  }),
+  React.createElement(CreateComment)
 );
 
 render(App, node);
