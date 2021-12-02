@@ -83,19 +83,21 @@ class CreateComment extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleUserChange(event) {
-    const val = event.target.value;
     this.setState(() => ({
-      user: val
+      user: event.target.value
     }));
   }
   handleTextChange(event) {
-    const val = event.target.value;
     this.setState(() => ({
-      content: val
+      content: event.target.value
     }));
   }
   handleSubmit(event) {
     event.preventDefault();
+    this.props.onCommentSubmit({
+      user: this.state.user.trim(),
+      content: this.state.content.trim()
+    });
     this.setState(() => ({
       user: '',
       content: ''
@@ -128,23 +130,6 @@ class CreateComment extends Component {
   }
 }
 
-Post.propTypes = {
-  user: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired
-};
-
-Comment.propTypes = {
-  id: PropTypes.number.isRequired,
-  content: PropTypes.string.isRequired,
-  user: PropTypes.string.isRequired
-};
-
-CreateComment.propTypes = {
-  onCommentSubmit: PropTypes.func.isRequired,
-  content: PropTypes.string
-};
-
 const App = React.createElement(
   Post,
   {
@@ -161,3 +146,20 @@ const App = React.createElement(
 );
 
 render(App, node);
+
+Post.propTypes = {
+  user: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired
+};
+
+Comment.propTypes = {
+  id: PropTypes.number.isRequired,
+  content: PropTypes.string.isRequired,
+  user: PropTypes.string.isRequired
+};
+
+CreateComment.propTypes = {
+  onCommentSubmit: PropTypes.func.isRequired,
+  content: PropTypes.string
+};
