@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
+// import { render } from 'react-dom';
 import PropTypes from 'prop-types';
-// import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 // import './index.css';
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
@@ -32,15 +32,14 @@ class Post extends Component {
           className: 'postAuthor',
           id: this.props.id
         },
-        this.props.user,
-        React.createElement(
-          'span',
-          {
-            className: 'postBody'
-          },
-          this.props.content
-        ),
-        this.props.children
+        this.props.user
+      ),
+      React.createElement(
+        'span',
+        {
+          className: 'postBody'
+        },
+        this.props.content
       )
     );
   }
@@ -58,14 +57,14 @@ class Comment extends Component {
         {
           className: 'commentAuthor'
         },
-        this.props.user,
-        React.createElement(
-          'span',
-          {
-            className: 'commentContent'
-          },
-          this.props.content
-        )
+        this.props.user
+      ),
+      React.createElement(
+        'span',
+        {
+          className: 'commentContent'
+        },
+        this.props.content
       )
     );
   }
@@ -110,6 +109,7 @@ class CreateComment extends Component {
         className: 'createComment',
         onSubmit: this.handleSubmit
       },
+      React.createElement('p', {}),
       React.createElement('input', {
         type: 'text',
         placeholder: 'Your name',
@@ -130,12 +130,52 @@ class CreateComment extends Component {
   }
 }
 
+class CommentBox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      comments: this.props.comments
+    };
+    this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+  }
+  handleCommentSubmit(comment) {
+    const comments = this.state.comments;
+    comment.id = Date.now();
+    const newComments = comments.concat([comment]);
+    this.setState({
+      comments: newComments
+    });
+  }
+  render() {
+    return React.createElement(
+      'div',
+      {
+        className: 'commentBox'
+      },
+      React.createElement(Post, {
+        id: this.props.post.id,
+        content: this.props.post.content,
+        user: this.props.post.user
+      }),
+      this.state.comments.map(comment => React.createElement(Comment, {
+        key: comment.id,
+        id: comment.id,
+        content: comment.content,
+        user: comment.user
+      })),
+      React.createElement(CreateComment, {
+        onCommentSubmit: this.handleCommentSubmit
+      })
+    );
+  }
+}
+
 const data = {
   post: {
     'id': 123,
     'content': 'What we hope ever to do with ease, we must first learn to do with diligence. - Samuel Johnson',
     'user': 'Mark Thomas',
-    },
+  },
   comments: [
     {
       id: 0,
@@ -162,38 +202,36 @@ const data = {
       user: 'Peter',
       content: '@mitchell ok: P',
     }]
-  };
+};
 
-  const App = React.createElement(
-    Post,
-    {
-      id: 1,
-      content: ' said: This is a post!',
-      user: 'Mark'
-    },
-    React.createElement(Comment, {
-      id: 2,
-      user: 'Bob',
-      content: ' commented: wow! how cool!'
-    }),
-    React.createElement(CreateComment)
-  );
+const App = React.createElement(
+  CommentBox,
+  {
+    comments: data.comments,
+    post: data.post
+  }
+);
 
-  render(App, node);
+ReactDOM.render(App, node);
 
 Post.propTypes = {
-    user: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired
-  };
+  user: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired
+};
 
-  Comment.propTypes = {
-    id: PropTypes.number.isRequired,
-    content: PropTypes.string.isRequired,
-    user: PropTypes.string.isRequired
-  };
+Comment.propTypes = {
+  id: PropTypes.number.isRequired,
+  content: PropTypes.string.isRequired,
+  user: PropTypes.string.isRequired
+};
 
-  CreateComment.propTypes = {
-    onCommentSubmit: PropTypes.func.isRequired,
-    content: PropTypes.string
-  };
+CreateComment.propTypes = {
+  onCommentSubmit: PropTypes.func.isRequired,
+  content: PropTypes.string
+};
+
+CommentBox.propTypes = {
+  post: PropTypes.object,
+  comments: PropTypes.arrayOf(PropTypes.object)
+};

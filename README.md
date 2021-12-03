@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Данный проект инициализирован create react app. В html-файле создан блок с id="root", для размещения React-приложения в этот DOM-элемент. В index.js хранится ссылка на корневой элемент и созданы элементы React. Добавление классового компонента и применение PropTypes и метода render.
+Данный проект инициализирован create react app. В html-файле создан блок с id="root", для размещения React-приложения в этот DOM-элемент. В index.js хранится ссылка на корневой элемент и созданы элементы React. Добавление классового компонента и применение PropTypes и метода render. Обработка отправки комментариев и итерация по элементам.
 
 ## Available Scripts
 
