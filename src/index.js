@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-// import './index.css';
+import './index.css';
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
@@ -21,51 +21,22 @@ import ReactDOM from 'react-dom';
 const node = document.getElementById('root');
 class Post extends Component {
   render() {
-    return React.createElement(
-      'div',
-      {
-        className: 'post'
-      },
-      React.createElement(
-        'h2',
-        {
-          className: 'postAuthor',
-          id: this.props.id
-        },
-        this.props.user
-      ),
-      React.createElement(
-        'span',
-        {
-          className: 'postBody'
-        },
-        this.props.content
-      )
+    return (
+      <div className='post'>
+        <h2 className='postAuthor'>{this.props.user}</h2>
+        <span className='postBody'>{this.props.content}</span>
+      </div>
     );
   }
 }
 
 class Comment extends Component {
   render() {
-    return React.createElement(
-      'div',
-      {
-        className: 'comment'
-      },
-      React.createElement(
-        'h2',
-        {
-          className: 'commentAuthor'
-        },
-        this.props.user
-      ),
-      React.createElement(
-        'span',
-        {
-          className: 'commentContent'
-        },
-        this.props.content
-      )
+    return (
+      <div className='comment'>
+        <h2 className='commentAuthor'>{this.props.user}</h2>
+        <span className='commentContent'>{this.props.content}</span>
+      </div>
     );
   }
 }
@@ -103,29 +74,22 @@ class CreateComment extends Component {
     }));
   }
   render() {
-    return React.createElement(
-      'form',
-      {
-        className: 'createComment',
-        onSubmit: this.handleSubmit
-      },
-      React.createElement('p', {}),
-      React.createElement('input', {
-        type: 'text',
-        placeholder: 'Your name',
-        value: this.state.user,
-        onChange: this.handleUserChange
-      }),
-      React.createElement('input', {
-        type: 'text',
-        placeholder: 'Thoughts?',
-        value: this.state.content,
-        onChange: this.handleTextChange
-      }),
-      React.createElement('input', {
-        type: 'submit',
-        value: 'Post'
-      }),
+    return (
+      <form onSubmit={this.handleSubmit} className='createComment'>
+        <input
+          value={this.state.user}
+          onChange={this.handleUserChange}
+          placeholder='Your name'
+          type='text'
+        />
+        <input
+          value={this.state.content}
+          onChange={this.handleTextChange}
+          placeholder='Thoughts?'
+          type='text'
+        />
+        <button type='submit'>Post</button>
+      </form>
     );
   }
 }
@@ -147,25 +111,22 @@ class CommentBox extends Component {
     });
   }
   render() {
-    return React.createElement(
-      'div',
-      {
-        className: 'commentBox'
-      },
-      React.createElement(Post, {
-        id: this.props.post.id,
-        content: this.props.post.content,
-        user: this.props.post.user
-      }),
-      this.state.comments.map(comment => React.createElement(Comment, {
-        key: comment.id,
-        id: comment.id,
-        content: comment.content,
-        user: comment.user
-      })),
-      React.createElement(CreateComment, {
-        onCommentSubmit: this.handleCommentSubmit
-      })
+    return (
+      <div className='commentBox'>
+        <Post
+          id={this.props.post.id}
+          content={this.props.post.content}
+          user={this.props.post.user}
+        />
+        {this.state.comments.map(comment => (
+          <Comment
+            key={comment.id}
+            content={comment.content}
+            user={comment.user}
+          />
+        ))}
+        <CreateComment onCommentSubmit={this.handleCommentSubmit} />
+      </div>
     );
   }
 }
@@ -180,7 +141,7 @@ const data = {
     {
       id: 0,
       user: 'David',
-      content: 'such. win.',
+      content: 'Such. win.',
     },
     {
       id: 1,
@@ -204,13 +165,10 @@ const data = {
     }]
 };
 
-const App = React.createElement(
-  CommentBox,
-  {
-    comments: data.comments,
-    post: data.post
-  }
-);
+const App = <CommentBox
+  comments={data.comments}
+  post={data.post}
+/>;
 
 ReactDOM.render(App, node);
 
