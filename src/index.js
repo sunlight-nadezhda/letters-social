@@ -8,41 +8,55 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { render } from 'react-dom';
 
-class Counter extends React.Component {
-  static propTypes = {
-    incrementBy: PropTypes.number,
-    onIncrement: PropTypes.func.isRequired
-  };
-  static defaultProps = {
-    incrementBy: 1
-  };
+const Greeting = (props) => <div>Hello {props.for}</div>;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      count: 0
-    };
-    this.onButtonClick = this.onButtonClick.bind(this);
-  }
-  onButtonClick() {
-    this.setState((prevState, props) => ({
-      count: prevState.count + props.incrementBy
-    }));
-  }
-  render() {
-    return (
-      <div>
-        <h1>{this.state.count}</h1>
-        <button onClick={this.onButtonClick}>++</button>
-      </div>
-    );
-  }
-}
+Greeting.propTypes = {
+  for: PropTypes.string.isRequired
+};
+
+Greeting.defaultProps = {
+  for: 'friend'
+};
 
 render(
-  <Counter incrementBy={1} />,
-  document.getElementById('root')
+  <Greeting for='Mark' />, document.getElementById('root')
 );
+
+// class Counter extends React.Component {
+//   static propTypes = {
+//     incrementBy: PropTypes.number,
+//     onIncrement: PropTypes.func.isRequired
+//   };
+//   static defaultProps = {
+//     incrementBy: 1
+//   };
+
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       count: 0
+//     };
+//     this.onButtonClick = this.onButtonClick.bind(this);
+//   }
+//   onButtonClick() {
+//     this.setState((prevState, props) => ({
+//       count: prevState.count + props.incrementBy
+//     }));
+//   }
+//   render() {
+//     return (
+//       <div>
+//         <h1>{this.state.count}</h1>
+//         <button onClick={this.onButtonClick}>++</button>
+//       </div>
+//     );
+//   }
+// }
+
+// render(
+//   <Counter incrementBy={1} />,
+//   document.getElementById('root')
+// );
 
 // class ShallowMerge extends React.Component {
 //   constructor(props) {
