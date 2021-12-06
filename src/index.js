@@ -8,33 +8,70 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-class Secret extends React.Component{
+class ShallowMerge extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'top secret!'
+      user: {
+        name: 'Mark',
+        colors: {
+          favorite: ''
+        }
+      }
     };
     this.onButtonClick = this.onButtonClick.bind(this);
   }
   onButtonClick() {
-    this.setState(() => ({
-      name: 'Mark'
-    }));
+    this.setState({
+      user: {
+        colors: {
+          favorite: 'blue'
+        }
+      }
+    });
   }
   render() {
     return (
       <div>
-        <h1>My name is {this.state.name}</h1>
-        <button onClick={this.onButtonClick}>reveal the secret!</button>
+        <h1>My favorite color is {this.state.user.colors.favorite} and my name is {this.state.user.name}</h1>
+        <button onClick={this.onButtonClick}>show the color!</button>
       </div>
     );
   }
 }
 
 render(
-  <Secret />,
+  <ShallowMerge />,
   document.getElementById('root')
 );
+
+// class Secret extends React.Component{
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       name: 'top secret!'
+//     };
+//     this.onButtonClick = this.onButtonClick.bind(this);
+//   }
+//   onButtonClick() {
+//     this.setState(() => ({
+//       name: 'Mark'
+//     }));
+//   }
+//   render() {
+//     return (
+//       <div>
+//         <h1>My name is {this.state.name}</h1>
+//         <button onClick={this.onButtonClick}>reveal the secret!</button>
+//       </div>
+//     );
+//   }
+// }
+
+// render(
+//   <Secret />,
+//   document.getElementById('root')
+// );
 
 // ReactDOM.render(
 //   <React.StrictMode>
