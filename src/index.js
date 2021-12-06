@@ -1,6 +1,6 @@
 // import React, { Component } from 'react';
 // import { render } from 'react-dom';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
 // import './index.css';
 // import App from './App';
@@ -8,42 +8,78 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-class ShallowMerge extends React.Component {
+class Counter extends React.Component {
+  static propTypes = {
+    incrementBy: PropTypes.number,
+    onIncrement: PropTypes.func.isRequired
+  };
+  static defaultProps = {
+    incrementBy: 1
+  };
+
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-        name: 'Mark',
-        colors: {
-          favorite: ''
-        }
-      }
+      count: 0
     };
     this.onButtonClick = this.onButtonClick.bind(this);
   }
   onButtonClick() {
-    this.setState({
-      user: {
-        colors: {
-          favorite: 'blue'
-        }
-      }
-    });
+    this.setState((prevState, props) => ({
+      count: prevState.count + props.incrementBy
+    }));
   }
   render() {
     return (
       <div>
-        <h1>My favorite color is {this.state.user.colors.favorite} and my name is {this.state.user.name}</h1>
-        <button onClick={this.onButtonClick}>show the color!</button>
+        <h1>{this.state.count}</h1>
+        <button onClick={this.onButtonClick}>++</button>
       </div>
     );
   }
 }
 
 render(
-  <ShallowMerge />,
+  <Counter incrementBy={1} />,
   document.getElementById('root')
 );
+
+// class ShallowMerge extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       user: {
+//         name: 'Mark',
+//         colors: {
+//           favorite: ''
+//         }
+//       }
+//     };
+//     this.onButtonClick = this.onButtonClick.bind(this);
+//   }
+//   onButtonClick() {
+//     this.setState({
+//       user: {
+//         colors: {
+//           favorite: 'blue'
+//         }
+//       }
+//     });
+//   }
+//   render() {
+//     return (
+//       <div>
+//         <h1>My favorite color is {this.state.user.colors.favorite} and my name is {this.state.user.name}</h1>
+//         <button onClick={this.onButtonClick}>show the color!</button>
+//       </div>
+//     );
+//   }
+// }
+
+// render(
+//   <ShallowMerge />,
+//   document.getElementById('root')
+// );
 
 // class Secret extends React.Component{
 //   constructor(props) {
