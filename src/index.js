@@ -1,36 +1,81 @@
-// import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
 // import './index.css';
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
-import React from 'react';
+// import React from 'react';
 
-const UserProfile = props => <img src={`https://source.unsplash.com/user/${props.username}`} alt='' />;
-
-UserProfile.propTypes = {
-  username: PropTypes.string
+class ChildComponent extends Component {
+  static propTypes = {
+    name: PropTypes.string
+  };
+  static defaultProps = (() => {
+    console.log('ChildComponent: defaultProps');
+    return {};
+  })();
+  constructor(props) {
+    super(props);
+    console.log('ChildComponent: state');
+  }
+  render() {
+    console.log('ChildComponent: render');
+    return (
+      <div>
+        Name: {this.props.name}
+      </div>
+    );
+  }
 };
 
-UserProfile.defaultProps = {
-  username: 'erondu'
+class ParentComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: ''
+    };
+    this.onInputChange = this.onInputChange.bind(this);
+  };
+  onInputChange(e) {
+    this.setState({ text: e.target.value });
+  }
+  render() {
+    console.log('ParentComponent: render');
+    return [
+      <h2 key='h2'>Learn about rendering and lifecycle methods!</h2>,
+      <input key='input' value={this.state.text} onChange={this.onInputChange} />,
+      <ChildComponent key='ChildComponent' name={this.state.text} />
+    ];
+  }
 };
 
-const UserProfileLink = props => {
-  return <a href={`https://ifelse.io/${props.username}`}>{props.username}</a>
-};
+render(<ParentComponent />, document.getElementById('root'));
 
-const UserCard = props => {
-  return (
-    <div>
-      <UserProfileLink username={props.username} /><br />
-      <UserProfile username={props.username} />
-    </div>
-  );
-};
+// const UserProfile = props => <img src={`https://source.unsplash.com/user/${props.username}`} alt='' />;
 
-render(<UserCard username='erondu' />, document.getElementById('root'));
+// UserProfile.propTypes = {
+//   username: PropTypes.string
+// };
+
+// UserProfile.defaultProps = {
+//   username: 'erondu'
+// };
+
+// const UserProfileLink = props => {
+//   return <a href={`https://ifelse.io/${props.username}`}>{props.username}</a>
+// };
+
+// const UserCard = props => {
+//   return (
+//     <div>
+//       <UserProfileLink username={props.username} /><br />
+//       <UserProfile username={props.username} />
+//     </div>
+//   );
+// };
+
+// render(<UserCard username='erondu' />, document.getElementById('root'));
 
 // const Greeting = (props) => <div>Hello {props.for}</div>;
 
