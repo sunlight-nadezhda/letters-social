@@ -1,26 +1,50 @@
 // import React, { Component } from 'react';
-// import { render } from 'react-dom';
+import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
 // import './index.css';
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
 import React from 'react';
-import { render } from 'react-dom';
 
-const Greeting = (props) => <div>Hello {props.for}</div>;
+const UserProfile = props => <img src={`https://source.unsplash.com/user/${props.username}`} alt='' />;
 
-Greeting.propTypes = {
-  for: PropTypes.string.isRequired
+UserProfile.propTypes = {
+  username: PropTypes.string
 };
 
-Greeting.defaultProps = {
-  for: 'friend'
+UserProfile.defaultProps = {
+  username: 'erondu'
 };
 
-render(
-  <Greeting for='Mark' />, document.getElementById('root')
-);
+const UserProfileLink = props => {
+  return <a href={`https://ifelse.io/${props.username}`}>{props.username}</a>
+};
+
+const UserCard = props => {
+  return (
+    <div>
+      <UserProfileLink username={props.username} /><br />
+      <UserProfile username={props.username} />
+    </div>
+  );
+};
+
+render(<UserCard username='erondu' />, document.getElementById('root'));
+
+// const Greeting = (props) => <div>Hello {props.for}</div>;
+
+// Greeting.propTypes = {
+//   for: PropTypes.string.isRequired
+// };
+
+// Greeting.defaultProps = {
+//   for: 'friend'
+// };
+
+// render(
+//   <Greeting for='Mark' />, document.getElementById('root')
+// );
 
 // class Counter extends React.Component {
 //   static propTypes = {
