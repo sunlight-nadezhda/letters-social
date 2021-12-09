@@ -48,6 +48,9 @@ class ChildComponent extends Component {
     console.log('previousProps: ', previousProps);
     console.log('previousState: ', previousState);
   }
+  componentWillUnmount() {
+    console.log('ChildComponent: componentWillUnmount');
+  }
   render() {
     if (this.state.oops) {
       throw new Error('Something went wrong');
@@ -81,6 +84,9 @@ class ParentComponent extends Component {
   }
   componentDidMount() {
     console.log('ParentComponent: componentDidMount');
+  }
+  componentWillUnmount() {
+    console.log('ParentComponent: componentWillUnmount');
   }
   onInputChange(e) {
     const text = e.target.value;
