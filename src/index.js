@@ -18,9 +18,10 @@ class ChildComponent extends Component {
   constructor(props) {
     super(props);
     console.log('ChildComponent: state');
-    this.state = {
-      name: 'Mark'
-    };
+    // this.state = {
+    //   name: 'Mark'
+    // };
+    this.oops = this.oops.bind(this);
   }
   componentWillMount() {
     console.log('ChildComponent: componentWillMount');
@@ -51,16 +52,20 @@ class ChildComponent extends Component {
   componentWillUnmount() {
     console.log('ChildComponent: componentWillUnmount');
   }
+  oops() {
+    this.setState(() => ({ oops: true }));
+  }
   render() {
     if (this.state.oops) {
       throw new Error('Something went wrong');
     }
     console.log('ChildComponent: render');
-    return (
+    return [
       <div>
         Name: {this.props.name}
-      </div>
-    );
+      </div>,
+      <button onClick={this.oops}>Create error</button>
+    ];
   }
 };
 
@@ -92,8 +97,23 @@ class ParentComponent extends Component {
     const text = e.target.value;
     this.setState(() => ({text: text}));
   }
+  componentDidCatch(err, errorInfo) {
+    console.log('componentDidCatch');
+    console.error(err);
+    console.error(errorInfo);
+    this.setState(() => ({ err, errorInfo }));
+  }
   render() {
     console.log('ParentComponent: render');
+    if (this.state.err) {
+      return (
+        <details style={{ whiteSpace: 'pre-wrap' }}>
+          {this.state.error && this.state.error.toString()}
+          <br />
+          {this.state.errorInfo.componentStack}
+        </details>
+      );
+    }
     return [
       <h2 key='h2'>Learn about rendering and lifecycle methods!</h2>,
       <input key='input' value={this.state.text} onChange={this.onInputChange} />,
