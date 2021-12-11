@@ -1,44 +1,38 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Navbar from './components/nav/navbar';
 import Loader from './components/Loader';
 import './App.css';
+import data from './utils/data.json';
 
-class App extends React.Component {
-  constuctor(props) {
-    // super(props);
-    this.state = {
-      error: null,
-      loading: false,
-      posts: []
-    };
+const App = () => {
+  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const getPosts = () => {
+    console.log(data);
+    setPosts(posts => posts.concat(data));
   }
-  static propTypes = {
-    children: PropTypes.node
-  };
-  render() {
     return (
       <div className="app">
         <Navbar />
-        {/* {this.state.loading ? (
+        {loading ? (
           <div className="loading">
             <Loader />
           </div>
         ) : (
-          <div className="home">
-              <button className='block'>
+            <div className="home">
+              <button className='block' onClick={getPosts}>
                 Load more posts
               </button>
-          </div>
-        )} */}
-        <div className="home">
-          <button className='block'>
-            Load more posts
-          </button>
-        </div>
+            </div>
+        )}
       </div>
     );
-  }
 }
 
 // function App() {
@@ -61,5 +55,9 @@ class App extends React.Component {
 //     </div>
 //   );
 // }
+
+App.propTypes = {
+  children: PropTypes.node
+};
 
 export default App;
