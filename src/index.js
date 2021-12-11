@@ -1,8 +1,7 @@
-// import React, { Component } from 'react';
 import { render } from 'react-dom';
-// import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
-import './index.css';
+// import './index.scss';
+import './styles/styles.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 // import React from 'react';
