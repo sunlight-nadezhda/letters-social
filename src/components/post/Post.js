@@ -19,7 +19,7 @@ const Post = props => {
             <UserHeader user={props.post.user} />
             <Content post={props.post} />
             <Image post={props.post} />
-            <PostActionSection showComments={showComments} />
+            <PostActionSection showComments={showComments} setShowComments={setShowComments} />
             <Comments
                 comments={props.post.comments}
                 show={showComments}
