@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Navbar from './components/nav/navbar';
 import Loader from './components/Loader';
 import Post from './components/post/Post';
+import CreatePost from './components/post/Create';
 import './App.css';
 import data from './utils/data.json';
 
@@ -11,9 +12,14 @@ const App = () => {
   const [posts, setPosts] = useState([]);
 
   const getPosts = () => {
-    console.log(data);
+    console.log('data: ', data);
     setPosts(posts => posts.concat(data));
-  }
+  };
+
+  const createNewPost = (post) => {
+    console.log('post: ', post);
+    setPosts(posts => posts.concat(post));
+  };
 
   useEffect(() => {
     getPosts();
@@ -30,6 +36,7 @@ const App = () => {
           <div className="home">
             <div></div>
             <div>
+              <CreatePost onSubmit={createNewPost} />
               {posts.length && (
                 <div className="posts">
                   {posts.map((post, index) => {
